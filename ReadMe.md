@@ -13,7 +13,7 @@ christian.scladetsch@gmail.com
 - `--llm` encourages LLM queries from within the code execution.
 - `--debug` allows gptshell to debug its own code if it fails.
 - `--showcode` shows the code being executed.
-- `clear` resets gptshell's memory, along with the console.
+- `clear` resets engshell's memory, along with the console.
 - starting a prompt with `.` immediately executes that in the outer system shell.
 
 ## Examples
