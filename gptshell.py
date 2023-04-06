@@ -15,12 +15,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation                         
 from keras.optimizers import SGD   
 
-def run_startup():
-    with open('GPT-Startup-Scripts/GPT-Start-4.md') as f:
-        startup = f.read()
-        LLM(startup)
-
-
 openai.api_key = OPENAI_KEY
 MAX_PROMPT = 20*1024
 CONTEXT_LEFT, CONTEXT_RIGHT = '{', '}'
@@ -31,6 +25,11 @@ VERBOSE = True
 MAX_DEBUG_ATTEMPTS = 2
 RETRY_ERRORS = ["The server had an error while processing your request. Sorry about that!"]
 memory = []
+
+def run_startup():
+    with open('GPT-Startup-Scripts/GPT-Start-4.md') as f:
+        startup = f.read()
+        LLM(startup)
 
 def print_console_prompt():
     print(engshell_PREVIX(), end="")
