@@ -122,8 +122,6 @@ def run_python(returned_code, debug = False, showcode = False):
     #print_status("compiling...")
     if showcode: 
         print(returned_code, end = '' if returned_code[-1] == '\n' else '\n')
-    print_status("running...")
-    returned_code = clean_code_string(returned_code)
     success, output = containerize_code(returned_code)
     attempts = 0
     should_debug = debug and (attempts < MAX_DEBUG_ATTEMPTS) and (not success)
