@@ -16,11 +16,7 @@ from keras.layers import Dense, Dropout, Activation
 from keras.optimizers import SGD   
 
 openai.api_key = OPENAI_KEY
-<<<<<<< HEAD:gptshell.py
-MAX_PROMPT = 20*1024
-=======
 MAX_PROMPT = 20480
->>>>>>> 2ac4d8f (pip compatibility, debug fix, prompt improvements, update requirements.txt):engshell.py
 CONTEXT_LEFT, CONTEXT_RIGHT = '{', '}'
 engshell_PREVIX = lambda: Style.RESET_ALL + Fore.YELLOW + ' δ ' + Fore.WHITE
 API_CALLS_PER_MIN = 50
