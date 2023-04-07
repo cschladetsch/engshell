@@ -15,7 +15,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation                         
 from keras.optimizers import SGD   
 
-WINDOWS = platform.system() == "Windows"
 openai.api_key = OPENAI_KEY
 MAX_PROMPT = 20*1024
 CONTEXT_LEFT, CONTEXT_RIGHT = '{', '}'
@@ -67,11 +66,16 @@ def LLM(prompt, mode='text'):
     time.sleep(1.0/API_CALLS_PER_MIN)
     if mode == 'text':
         messages=[
-            {"role": "system", "content": CONGNITIVE_SYSTEM_CALIBRATION_MESSAGE},
+            {"role": "system", "content": LLM_SYSTEM_CALIBRATION_MESSAGE},
             {"role": "user", "content": prompt},
         ]
     elif mode == 'code':
         messages=memory
+    elif mode == 'debug':
+        messages=[
+            {"role": "system", "content": DEBUG_SYSTEM_CALIBRATION_MESSAGE},
+            {"role": "user", "content": prompt},
+        ]
     elif mode == 'install':
         messages=[
             {"role": "system", "content": INSTALL_SYSTEM_CALIBRATION_MESSAGE},
@@ -106,7 +110,8 @@ def run_python(returned_code, debug = False, showcode = False):
     #print_status("compiling...")
     if showcode: 
         print(returned_code, end = '' if returned_code[-1] == '\n' else '\n')
-    #print_status("running...")
+    print_status("running...")
+    returned_code = clean_code_string(returned_code)
     success, output = containerize_code(returned_code)
     attempts = 0
     should_debug = debug and (attempts < MAX_DEBUG_ATTEMPTS) and (not success)
@@ -117,14 +122,14 @@ def run_python(returned_code, debug = False, showcode = False):
             print_status('installing: ' + output)
             prompt = INSTALL_USER_MESSAGE(output)
             returned_command = LLM(prompt, mode='install')
-            returned_command = clean_code_string(returned_command)
             os.system(returned_command)
         elif should_debug:
-            prompt = returned_code + '\n\n The previous code gives the error ' + output + ', given the following python code, rewrite the code with the error resolved:\n'
             print_status('debugging: ' + output)
-            returned_code = LLM(prompt, mode='code')
+            prompt = DEBUG_MESSAGE(returned_code, output)
+            returned_code = LLM(prompt, mode='debug')
             if showcode: 
                 print(returned_code, end = '' if returned_code[-1] == '\n' else '\n')
+        returned_code = clean_code_string(returned_code)
         success, output = containerize_code(returned_code)
         attempts += 1
         should_debug = debug and (attempts < MAX_DEBUG_ATTEMPTS) and (not success)
@@ -140,9 +145,6 @@ def clear_memory():
             {"role": "user", "content": CODE_USER_CALIBRATION_MESSAGE},
             {"role": "assistant", "content": CODE_ASSISTANT_CALIBRATION_MESSAGE},
             {"role": "system", "content": CONSOLE_OUTPUT_CALIBRATION_MESSAGE},
-            {"role": "user", "content": CODE_USER_CALIBRATION_MESSAGE2},
-            {"role": "assistant", "content": CODE_ASSISTANT_CALIBRATION_MESSAGE2},
-            {"role": "system", "content": CONSOLE_OUTPUT_CALIBRATION_MESSAGE2},
             # uncomment these if you wish to easily use photos from Unsplash API
             #{"role": "user", "content": CODE_USER_CALIBRATION_MESSAGE3},
             #{"role": "assistant", "content": CODE_ASSISTANT_CALIBRATION_MESSAGE3},
@@ -171,7 +173,7 @@ if __name__ == "__main__":
 
         if user_input == 'clear':
             clear_memory()
-            os.system("cls" if WINDOWS else "clear")
+            os.system("cls" if platform.system() == "Windows" else "clear")
             continue
 
         if user_input.startswith("."):
@@ -202,4 +204,5 @@ if __name__ == "__main__":
                 error_message = str(e)
                 console_output = error_message
                 run_code = any([err in error_message for err in RETRY_ERRORS])
-            memory.append({"role": "system", "content": console_output})
+            if len(console_output) < MAX_PROMPT:
+                memory.append({"role": "system", "content": console_output})
