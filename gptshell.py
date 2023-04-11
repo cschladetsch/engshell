@@ -21,12 +21,7 @@ def run_startup():
         LLM(startup)
 
 
-openai.api_key = OPENAI_KEY
-<<<<<<< HEAD:gptshell.py
 MAX_PROMPT = 20*1024
-=======
-MAX_PROMPT = 20480
->>>>>>> 2ac4d8f (pip compatibility, debug fix, prompt improvements, update requirements.txt):engshell.py
 CONTEXT_LEFT, CONTEXT_RIGHT = '{', '}'
 engshell_PREVIX = lambda: Style.RESET_ALL + Fore.YELLOW + ' δ ' + Fore.WHITE
 API_CALLS_PER_MIN = 50
@@ -212,7 +207,7 @@ if __name__ == "__main__":
         user_input = user_input.replace('--llm','')
         user_input = user_input.replace('--debug','')
         user_input = user_input.replace('--showcode','')
-        user_prompt = USER_MESSAGE(user_input, current_dir = os.getcwd())
+        user_prompt = USER_MESSAGE(user_input)
         memory.append({"role": "user", "content": user_prompt})
         run_code = True
         run_startup()
