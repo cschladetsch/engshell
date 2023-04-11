@@ -5,7 +5,13 @@ christian.scladetsch@gmail.com
 ## How to use:
 
 - install requirements: `pip install -r requirements.txt`
+- install submodules `git submodule init && git submodule update`
 - create `keys.py` in the gptshell directory to define `OPENAI_KEY`
+	- for example:
+	```python
+	OPENAI_KEY=sk-aauewytfgaefgldghldfjgdg
+	OTHER_API_KEY=asdhgsjdfdghsjdfa28376482l
+	```
 - run `python gptshell.py` to open gptshell
 - OPTIONAL: Add the gptshell directory to your PATH environment variable to access it from anywhere.
 
