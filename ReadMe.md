@@ -2,6 +2,10 @@
 
 christian.scladetsch@gmail.com
 
+I've recently and only temporarily lost ChatGPT Pro access, so some of these may not give same results. Specifically, using much of the functionality in the prompts provided by thge submodule `GPT-Startup-Scripts` will not work.
+
+If you want to fix for you, change the model on line 102 of `gptshell.py` to "gpt-4". I'll fix this generall once I spend a little time determining what models are available given an OPENAI\_KEY.
+
 ## How to use:
 
 - install requirements: `pip install -r requirements.txt`
