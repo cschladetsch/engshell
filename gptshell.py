@@ -22,7 +22,7 @@ def run_startup():
 
 
 openai.api_key = OPENAI_KEY
-MAX_PROMPT = 20480
+MAX_PROMPT = 20*1024
 CONTEXT_LEFT, CONTEXT_RIGHT = '{', '}'
 engshell_PREVIX = lambda: Style.RESET_ALL + Fore.YELLOW + ' δ ' + Fore.WHITE
 API_CALLS_PER_MIN = 50
@@ -223,8 +223,4 @@ if __name__ == "__main__":
                 console_output = error_message
                 run_code = any([err in error_message for err in RETRY_ERRORS])
             if len(console_output) < MAX_PROMPT:
-<<<<<<< HEAD:gptshell.py
                 memory.append({"role": "system", "content": console_output})
-=======
-                memory.append({"role": "system", "content": console_output})
->>>>>>> 2ac4d8f (pip compatibility, debug fix, prompt improvements, update requirements.txt):engshell.py
