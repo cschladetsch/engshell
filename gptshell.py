@@ -197,7 +197,7 @@ if __name__ == "__main__":
         user_input = user_input.replace('--llm','')
         user_input = user_input.replace('--debug','')
         user_input = user_input.replace('--showcode','')
-        user_prompt = USER_MESSAGE(user_input, current_dir = os.getcwd())
+        user_prompt = USER_MESSAGE(user_input)
         memory.append({"role": "user", "content": user_prompt})
         run_code = True
         while run_code:
