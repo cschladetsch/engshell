@@ -2,6 +2,8 @@
 
 christian.scladetsch@gmail.com
 
+## *Currently Broken* -- services will be restored shortly :D
+
 ## How to use:
 
 - install requirements: `pip install -r requirements.txt`
