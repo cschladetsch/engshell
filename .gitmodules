@@ -1,0 +1,3 @@
+[submodule "GPT-Startup-Scripts"]
+	path = GPT-Startup-Scripts
+	url = https://github.com/cschladetsch/GPT-Startup-Scripts

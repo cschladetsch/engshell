@@ -15,6 +15,12 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation                         
 from keras.optimizers import SGD   
 
+def run_startup():
+    with open('GPT-Startup-Scripts/GPT-Start-4.md') as f:
+        startup = f.read()
+        LLM(startup)
+
+
 openai.api_key = OPENAI_KEY
 MAX_PROMPT = 20480
 CONTEXT_LEFT, CONTEXT_RIGHT = '{', '}'
@@ -200,6 +206,7 @@ if __name__ == "__main__":
         user_prompt = USER_MESSAGE(user_input)
         memory.append({"role": "user", "content": user_prompt})
         run_code = True
+        run_startup()
         while run_code:
             returned_code = LLM(user_prompt, mode='code')
             memory.append({"role": "assistant", "content": returned_code})
