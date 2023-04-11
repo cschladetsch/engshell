@@ -4,7 +4,7 @@ christian.scladetsch@gmail.com
 
 I've recently and only temporarily lost ChatGPT Pro access, so some of these may not give same results. Specifically, using much of the functionality in the prompts provided by thge submodule `GPT-Startup-Scripts` will not work.
 
-If you want to fix for you, change the model on line 102 of `gptshell.py` to "gpt-4". I'll fix this generall once I spend a little time determining what models are available given an OPENAI\_KEY.
+If you want to fix for you, change the model on line 102 of `gptshell.py` to "gpt-4". I'll fix this general once I spend a little time determining what models are available given an OPENAI\_KEY.
 
 ## How to use:
 
@@ -16,9 +16,13 @@ If you want to fix for you, change the model on line 102 of `gptshell.py` to "gp
 	OPENAI_KEY=sk-aauewytfgaefgldghldfjgdg
 	OTHER_API_KEY=asdhgsjdfdghsjdfa28376482l
 	```
+	- the 'keys.py' file is ignored by `git`.
 - run `python gptshell.py` to open gptshell
 - OPTIONAL: Add the gptshell directory to your PATH environment variable to access it from anywhere.
-
+- OPTIONAL: Make an alias that runs the shell from anywhere, for example:
+	```bash
+	alias gpt=python <path_to_gptshell>\gptshell.py
+	```
 ## Notes:
 - `--llm` encourages LLM queries from within the code execution.
 - `--debug` allows gptshell to debug its own code if it fails.
